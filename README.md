@@ -1,126 +1,198 @@
-<h1 align="center">
-  <a href="https://github.com/posquit0/Awesome-CV" title="AwesomeCV Documentation">
-    <img alt="AwesomeCV" src="https://github.com/posquit0/Awesome-CV/raw/master/icon.png" width="200px" height="200px" />
-  </a>
-  <br />
-  Awesome CV
-</h1>
+# Another Awesome CV — Research / Academic Variant
 
-<p align="center">
-  LaTeX template for your outstanding job application
-</p>
+A real-world academic research CV (LaTeX → PDF) and personal GitHub Pages website, forked from [posquit0/Awesome-CV](https://github.com/posquit0/Awesome-CV) and extended for research use.
 
-<div align="center">
-  <a href="https://www.paypal.me/posquit0">
-    <img alt="Donate" src="https://img.shields.io/badge/Donate-PayPal-blue.svg" />
-  </a>
-  <a href="https://github.com/posquit0/Awesome-CV/actions/workflows/main.yml">
-    <img alt="GitHub Actions" src="https://github.com/posquit0/Awesome-CV/actions/workflows/main.yml/badge.svg" />
-  </a>
-  <a href="https://raw.githubusercontent.com/posquit0/Awesome-CV/master/examples/resume.pdf">
-    <img alt="Example Resume" src="https://img.shields.io/badge/resume-pdf-green.svg" />
-  </a>
-  <a href="https://raw.githubusercontent.com/posquit0/Awesome-CV/master/examples/cv.pdf">
-    <img alt="Example CV" src="https://img.shields.io/badge/cv-pdf-green.svg" />
-  </a>
-  <a href="https://raw.githubusercontent.com/posquit0/Awesome-CV/master/examples/coverletter.pdf">
-    <img alt="Example Coverletter" src="https://img.shields.io/badge/coverletter-pdf-green.svg" />
-  </a>
+The [`research-cv/`](research-cv/) folder contains **complete, working LaTeX source** of an active academic CV — use it as a full worked example or adapt it for your own.
+
+**[📄 Live CV PDF](https://dae416.github.io/papers/choi_cv.pdf) · [🌐 Live Website](https://dae416.github.io) · [Website Source](https://github.com/dae416/dae416.github.io)**
+
+---
+
+## Part 1: LaTeX Research CV
+
+### File structure
+
+```
+research-cv/
+  cv.tex                           # Main file — personal info, macros, section order
+  awesome-cv.cls                   # Extended class (adds pubSubsectionNum, etc.)
+  cv/
+    aboutme.tex                    # Summary, highlights, research interests, skills
+    work_experience.tex            # Academic employment
+    education.tex                  # Degrees
+    publications.tex               # Section wrapper (inputs journals + conferences)
+    publication_journals.tex       # Journal articles (numbered list)
+    publication_conf.tex           # Conferences & seminars (numbered list)
+    research_project_experience.tex
+    honors.tex                     # Awards & grants
+    teaching.tex                   # Mentoring & teaching
+    patents.tex
+```
+
+### Compile
+
+```bash
+cd research-cv
+xelatex -interaction=nonstopmode cv.tex
+```
+
+Requires XeLaTeX. Packages used: `fontspec`, `fontawesome5`, `academicons`, `hyperref`, `enumitem`, `booktabs`, `xcolor`, `pifont`, `wrapfig`, `subcaption`.
+
+On macOS with MacTeX:
+```bash
+brew install --cask mactex
+```
+
+### Key customizations over vanilla Awesome-CV
+
+#### 1. Color theme
+```latex
+\definecolor{awesome}{HTML}{1A2F6B}        % Dark navy
+\setbool{acvSectionColorHighlight}{false}
+```
+
+#### 2. Journal / venue shorthands
+```latex
+\newcommand{\jfm}{\textit{J. Fluid Mech.}}
+\newcommand{\pof}{\textit{Phys. Fluids}}
+\newcommand{\srep}{\textit{Sci. Rep.}}
+% ... add your own field's journals
+```
+
+#### 3. Under review / in preparation labels
+```latex
+\renewcommand{\underreview}{\textcolor{BrickRed}{\textit{Under review.}}}
+\newcommand{\inprep}[1]{\textcolor{BrickRed}{\textit{In preparation (#1).}}}
+```
+
+#### 4. Toggle links on/off (public vs. private version)
+Wrap URLs in `\ifshowcontent...\fi` to compile a clean link-free version:
+```latex
+\newif\ifshowcontent
+\showcontenttrue   % change to \showcontentfalse for link-free output
+```
+
+```latex
+\item Author, ``Title,'' \jfm (2024).
+      \ifshowcontent
+        \href{https://doi.org/...}{\underline{DOI}}
+        \href{https://arxiv.org/...}{\underline{arXiv}}
+      \fi
+```
+
+#### 5. GitHub stars badge
+```latex
+\newcommand{\githubstars}[1]{[\,{\faGithub}\,\ding{72}\,\textbf{#1}]}
+% Usage: DeepBubbleVelocimetry \githubstars{9}
+```
+
+#### 6. Numbered publication list (`pubSubsectionNum`)
+Custom environment (added to `awesome-cv.cls`) that produces a consecutively numbered publication list:
+```latex
+\begin{pubSubsectionNum}
+  \item \textbf{Your Name} \& Coauthor, ``Title,'' \jfm, vol, page (year).
+\end{pubSubsectionNum}
+```
+
+Bold your own name with a shorthand:
+```latex
+\newcommand{\daehyunchoi}{\textbf{Daehyun Choi}}
+```
+
+#### 7. Compact awards table (two columns: year | award)
+```latex
+\renewenvironment{cvhonors}{%
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} C{1.5cm} L{\textwidth - 1.5cm}}
+}{...}
+\renewcommand*{\cvhonor}[4]{%
+  \honordatestyle{#4} & \honorpositionstyle{#1}, \honortitlestyle{#2} \\
+}
+```
+
+---
+
+## Part 2: GitHub Pages Academic Website
+
+> Source: **[dae416/dae416.github.io](https://github.com/dae416/dae416.github.io)**
+> Live: **[dae416.github.io](https://dae416.github.io)**
+
+### Tech stack
+- **Bootstrap 3.4** — grid, navbar, responsive breakpoints
+- **Custom CSS** — `assets/css/daehyun2.css` (global), `assets/css/projects.css` (projects page)
+- **Font Awesome 6**, Google Fonts (Inter)
+- Pure HTML/CSS/JS — no build step, no framework
+
+### Page structure
+
+| File | Purpose |
+|---|---|
+| `index.html` | Landing page — bio, research interests, awards, news |
+| `projects.html` | Research projects — two-panel layout |
+| `publications.html` | Publications with thumbnail images/videos |
+| `opensource.html` | Open source tools |
+| `gallery.html` | Photo/video gallery |
+
+### Two-panel projects page
+
+`projects.html` uses a sticky sidebar (30%) + scrollable main panel (70%):
+```css
+.dc-proj-page            { display: flex; }
+.dc-proj-sidebar-panel   { flex: 0 0 30%; position: sticky; top: 65px; }
+.dc-proj-main-panel      { flex: 1; }
+```
+The sidebar highlights the current section as you scroll via `IntersectionObserver`.
+
+### Video rules
+
+Three video categories with different behavior:
+
+| Type | Element | Autoplay | Progress bar | Cursor |
+|---|---|---|---|---|
+| Hero video | `.dc-video-wrap` | Manual (click overlay) | Hover seek bar | pointer on overlay |
+| Gallery slide | `.dc-slide-wrap video` | Viewport enter | Hidden bar, shows on hover | pointer (via `:has(video)`) |
+| Inline standalone | `.dc-full-proj-img-single video` | Viewport enter | Hidden bar, shows on hover | default |
+
+All videos: `muted loop playsinline preload="none"` with `<source data-src="...">` for lazy loading.
+
+#### Carousel static mode (≤3 slides)
+Add `dc-gallery-static` **in HTML** (not just JS) to prevent a resize flash on load:
+```html
+<div class="dc-gallery-slider dc-gallery-static" id="gallery-xyz">
+  ...
+  <div class="dc-gallery-nav" style="display:none"></div>
 </div>
-
-<br />
-
-## What is Awesome CV?
-
-**Awesome CV** is LaTeX template for a **CV(Curriculum Vitae)**, **Résumé** or **Cover Letter** inspired by [Fancy CV](https://www.sharelatex.com/templates/cv-or-resume/fancy-cv). It is easy to customize your own template, especially since it is really written by a clean, semantic markup.
-
-
-## Donate
-
-Please help keep this project alive! Donations are welcome and will go towards further development of this project.
-
-    PayPal: paypal.me/posquit0
-
-*Thank you for your support!*
-
-## Preview
-
-#### Résumé
-
-You can see [PDF](https://raw.githubusercontent.com/posquit0/Awesome-CV/master/examples/resume.pdf)
-
-| Page. 1 | Page. 2 |
-|:---:|:---:|
-| [![Résumé](https://raw.githubusercontent.com/posquit0/Awesome-CV/master/examples/resume-0.png)](https://raw.githubusercontent.com/posquit0/Awesome-CV/master/examples/resume.pdf)  | [![Résumé](https://raw.githubusercontent.com/posquit0/Awesome-CV/master/examples/resume-1.png)](https://raw.githubusercontent.com/posquit0/Awesome-CV/master/examples/resume.pdf) |
-
-#### Cover Letter
-
-You can see [PDF](https://raw.githubusercontent.com/posquit0/Awesome-CV/master/examples/coverletter.pdf)
-
-| Without Sections | With Sections |
-|:---:|:---:|
-| [![Cover Letter(Traditional)](https://raw.githubusercontent.com/posquit0/Awesome-CV/master/examples/coverletter-0.png)](https://raw.githubusercontent.com/posquit0/Awesome-CV/master/examples/coverletter.pdf)  | [![Cover Letter(Awesome)](https://raw.githubusercontent.com/posquit0/Awesome-CV/master/examples/coverletter-1.png)](https://raw.githubusercontent.com/posquit0/Awesome-CV/master/examples/coverletter.pdf) |
-
-
-## Quick Start
-
-* [**Edit Résumé on OverLeaf.com**](https://www.overleaf.com/latex/templates/awesome-cv/tvmzpvdjfqxp)
-* [**Edit Cover Letter on OverLeaf.com**](https://www.overleaf.com/latex/templates/awesome-cv-cover-letter/pfzzjspkthbk)
-
-**_Note:_ Above services do not guarantee up-to-date source code of Awesome CV**
-
-
-## How to Use
-
-#### Requirements
-
-A full TeX distribution is assumed.  [Various distributions for different operating systems (Windows, Mac, \*nix) are available](http://tex.stackexchange.com/q/55437) but TeX Live is recommended.
-You can [install TeX from upstream](https://tex.stackexchange.com/q/1092) (recommended; most up-to-date) or use `sudo apt-get install texlive-full` if you really want that.  (It's generally a few years behind.)
-
-If you don't want to install the dependencies on your system, this can also be obtained via [Docker](https://docker.com).
-
-#### Usage
-
-At a command prompt, run
-
-```bash
-xelatex {your-cv}.tex
 ```
 
-Or using docker:
-
-```bash
-docker run --rm --user $(id -u):$(id -g) -i -w "/doc" -v "$PWD":/doc texlive/texlive:latest make
+#### Zoomed inline video
+Wrap in `overflow:hidden` to clip scaled overflow from covering adjacent captions:
+```html
+<div style="overflow:hidden; border-radius:5px;">
+  <video style="width:100%; transform:scale(1.4); transform-origin:center;">
+    <source data-src="videos/..." type="video/mp4">
+  </video>
+</div>
+<div class="dc-slide-progress"><div class="dc-slide-bar"></div></div>
+<p class="dc-slide-caption">Caption</p>
 ```
 
-In either case, this should result in the creation of ``{your-cv}.pdf``
+### Deploying without local git (GitHub API method)
 
+If your `.git` is unavailable (e.g., corrupted by Dropbox sync) or you want to push a single file directly:
 
-## Credit
+```bash
+# Requires GitHub CLI: https://cli.github.com/
+FILE_SHA=$(gh api repos/USERNAME/USERNAME.github.io/contents/PATH --jq '.sha')
+CONTENT=$(base64 -i "LOCAL_PATH")
+gh api --method PUT repos/USERNAME/USERNAME.github.io/contents/PATH \
+  -f message="update: description" \
+  -f content="$CONTENT" \
+  -f sha="$FILE_SHA" \
+  --jq '.commit.sha'
+```
 
-[**LaTeX**](https://www.latex-project.org) is a fantastic typesetting program that a lot of people use these days, especially the math and computer science people in academia.
+---
 
-[**FontAwesome6 LaTeX Package**](https://github.com/braniii/fontawesome) is a LaTeX package that provides access to the [Font Awesome 6](https://fontawesome.com/v6/icons) icon set.
+## Credits
 
-[**Roboto**](https://github.com/google/roboto) is the default font on Android and ChromeOS, and the recommended font for Google’s visual language, Material Design.
-
-[**Source Sans Pro**](https://github.com/adobe-fonts/source-sans-pro) is a set of OpenType fonts that have been designed to work well in user interface (UI) environments.
-
-
-## Contact
-
-You are free to take my `.tex` file and modify it to create your own resume. Please don't use my resume for anything else without my permission, though!
-
-If you have any questions, feel free to join me at [`#posquit0` on Freenode](irc://irc.freenode.net/posquit0) and ask away. Click [here](https://kiwiirc.com/client/irc.freenode.net/posquit0) to connect.
-
-Good luck!
-
-
-## Maintainers
-- [posquit0](https://github.com/posquit0)
-- [OJFord](https://github.com/OJFord)
-
-
-## See Also
-
-* [Awesome Identity](https://github.com/posquit0/hugo-awesome-identity) - A single-page Hugo theme to introduce yourself.
+- LaTeX class: [posquit0/Awesome-CV](https://github.com/posquit0/Awesome-CV)
+- Research CV adaptation: [LimHyungTae/Awesome-PhD-CV](https://github.com/LimHyungTae/Awesome-PhD-CV)
