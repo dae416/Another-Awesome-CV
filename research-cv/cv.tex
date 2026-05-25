@@ -1,0 +1,131 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+% Adapted from Awesome-PhD-CV by LimHyungTae
+% https://github.com/LimHyungTae/Awesome-PhD-CV
+
+\makeatletter
+\renewcommand\@biblabel[1]{\textbullet}
+\makeatother
+
+\documentclass[11pt, a4paper]{awesome-cv}
+
+\geometry{left=1.4cm, top=.8cm, right=1.4cm, bottom=1.8cm, footskip=.5cm}
+
+\usepackage[font=footnotesize]{subcaption}
+\usepackage{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage{xspace}
+\usepackage{booktabs}
+\usepackage{fontspec}
+\usepackage{fontawesome5}
+\usepackage{academicons}
+\usepackage{pifont}
+\usepackage{xcolor}
+
+% ---- Author name shorthand ----
+\newcommand{\daehyunchoi}{\textbf{Daehyun Choi}}
+
+% ---- Publication status labels (renew to override awesome-cv.cls definitions) ----
+\providecommand{\underreview}{}
+\renewcommand{\underreview}{\textcolor{BrickRed}{\textit{Under review.}}}
+\newcommand{\inprep}[1]{\textcolor{BrickRed}{\textit{In preparation (#1).}}}
+
+% ---- GitHub stars badge ----
+\newcommand{\githubstars}[1]{[\,{\faGithub}\,\ding{72}\,\textbf{#1}]}
+
+% ---- Journal/conference name shorthands (fluid mechanics) ----
+\newcommand{\jfm}{\textit{J. Fluid Mech.}}
+\newcommand{\pof}{\textit{Phys. Fluids}}
+\newcommand{\srep}{\textit{Sci. Rep.}}
+\newcommand{\jrsi}{\textit{J. R. Soc. Interface}}
+\newcommand{\icb}{\textit{Integr. Comp. Biol.}}
+\newcommand{\jms}{\textit{J. Membr. Sci.}}
+
+% ---- Named colors (dvipsnames subset used in CV) ----
+\definecolor{BrickRed}{rgb}{0.80, 0.11, 0.11}
+\definecolor{Cerulean}{rgb}{0.0, 0.48, 0.90}
+\definecolor{Gray}{rgb}{0.5, 0.5, 0.5}
+
+% ---- Color theme ----
+\definecolor{awesome}{HTML}{1A2F6B}
+\setbool{acvSectionColorHighlight}{false}
+
+\renewcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
+\renewcommand{\acvHeaderAfterNameSkip}{2.5mm}
+\renewcommand*{\headerpositionstyle}[1]{{\fontsize{9pt}{1em}\bodyfont\scshape\color{text} #1}}
+
+% Match body text size to Publications (normalsize)
+\renewcommand*{\paragraphstyle}{\normalsize\bodyfontlight\upshape\color{text}}
+\renewcommand*{\entrytitlestyle}[1]{{\normalsize\bodyfont\color{darktext} #1}}
+\renewcommand*{\entrypositionstyle}[1]{{\normalsize\bodyfont\color{graytext} #1}}
+\renewcommand*{\entrydatestyle}[1]{{\normalsize\bodyfontlight\color{graytext} #1}}
+\renewcommand*{\entrylocationstyle}[1]{{\normalsize\bodyfontlight\color{text} #1}}
+\renewcommand*{\descriptionstyle}[1]{{\normalsize\bodyfontlight\color{text} #1}}
+
+\renewenvironment{cvhonors}{%
+  \vspace{\acvSectionContentTopSkip}
+  \vspace{-2mm}
+  \begin{center}
+    \setlength\tabcolsep{0pt}
+    \setlength{\extrarowheight}{0pt}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} C{1.5cm} L{\textwidth - 1.5cm}}
+}{%
+    \end{tabular*}
+  \end{center}
+}
+\renewcommand*{\cvhonor}[4]{%
+  \honordatestyle{#4} & \honorpositionstyle{#1}, \honortitlestyle{#2} \\
+}
+
+%-------------------------------------------------------------------------------
+%  PERSONAL INFORMATION
+%-------------------------------------------------------------------------------
+\name{Daehyun}{Choi}
+\position{%
+  Postdoctoral Researcher%
+  {\enskip\cdotp\enskip}Fluid Mechanics%
+  {\enskip\cdotp\enskip}Bio-inspired Propulsion%
+  {\enskip\cdotp\enskip}Physical AI%
+}
+\email{dchoi319@gatech.edu}
+\homepage{dae416.github.io}
+\googlescholar{y0Nz1IwAAAAJ}{Google Scholar}
+
+\renewenvironment{cvitems}{%
+  \vspace{-4.0mm}
+  \begin{justify}
+  \begin{itemize}[leftmargin=2ex, nosep, noitemsep]
+    \setlength{\parskip}{0pt}
+    \renewcommand{\labelitemi}{\bullet}
+}{%
+  \end{itemize}
+  \end{justify}
+  \vspace{2.0mm}
+}
+
+\newif\ifshowcontent
+\showcontenttrue
+
+
+%-------------------------------------------------------------------------------
+\begin{document}
+
+\makecvheader
+\makecvfooter
+  {\today}
+  {Daehyun Choi~~~\cdotp~~~Curriculum Vitae}
+  {\thepage}
+
+\input{cv/aboutme.tex}
+\input{cv/work_experience.tex}
+\input{cv/education.tex}
+\newpage
+\input{cv/publications.tex}
+\input{cv/research_project_experience.tex}
+\input{cv/honors.tex}
+\input{cv/teaching.tex}
+\input{cv/patents.tex}
+
+\end{document}
